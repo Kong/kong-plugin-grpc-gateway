@@ -65,9 +65,9 @@ package hello;
 service HelloService {
   rpc SayHello(HelloRequest) returns (HelloResponse) {
     option (google.api.http) = {
-      get: "/v1/messages/{name}"
+      get: "/v1/messages/{greeting}"
       additional_bindings {
-        get: "/v1/messages/legacy/{name=**}"
+        get: "/v1/messages/legacy/{greeting=**}"
       }
       post: "/v1/messages/"
       body: "*"
