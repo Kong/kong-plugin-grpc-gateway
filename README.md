@@ -78,7 +78,7 @@ service HelloService {
 
 // The request message containing the user's name.
 message HelloRequest {
-  string name = 1;
+  string greeting = 1;
 }
 
 // The response message containing the greetings
@@ -101,7 +101,7 @@ curl -XGET localhost:8000/v1/messages/legacy/Kong2.0
 curl -XGET localhost:8000/v1/messages/legacy/Kong2.0/more/paths
 {"message":"Hello Kong2.0\/more\/paths"}
 
-curl -XPOST localhost:8000/v1/messages/Kong2.0 -d '{"name":"kong2.0"}'
+curl -XPOST localhost:8000/v1/messages/Kong2.0 -d '{"greeting":"kong2.0"}'
 {"message":"Hello kong2.0"}
 ```
 
