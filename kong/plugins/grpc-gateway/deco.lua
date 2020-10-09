@@ -153,6 +153,9 @@ local function rpc_transcode(method, path, protofile)
       for i, name in ipairs(endpoint.varnames) do
         vars[name] = m[i]
       end
+
+      kong.log.debug("rewrite to grpc path: ", endpoint.rewrite_path)
+
       return endpoint, vars
     end
   end
@@ -188,7 +191,10 @@ local function unframe(body)
     return nil, body
   end
 
-  local pos, ftype, sz = bunpack(body, "C>I")       -- luacheck: ignore ftype
+  local pos, _, sz = bunpack(body, "C>I")
+
+  kong.log.debug("unframed body size is ", sz)
+
   local frame_end = pos + sz - 1
   if frame_end > #body then
     return nil, body
@@ -259,7 +265,7 @@ function deco:downstream(chunk)
   local msg, body = unframe(body)
 
   while msg do
-    msg = encode_json(pb.decode(self.endpoint.output_type, msg))
+    msg = encode_json(assert(pb.decode(self.endpoint.output_type, msg)))
 
     out[n] = msg
     n = n + 1
