@@ -272,5 +272,9 @@ function deco:downstream(chunk)
   return chunk
 end
 
+function deco:get_raw_downstream_body()
+  return self.downstream_body
+end
+
 
 return deco
